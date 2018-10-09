@@ -3,8 +3,8 @@
 
 <head>
 	<title> Monthly Shia Prayer Timetable </title>
-	<link rel="stylesheet" type="text/css" media="screen" href="./bootstrap.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="./styles.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="bootstrap.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
 
 
 	<script>
@@ -36,17 +36,18 @@
 
 	<div class="card">
 		<div class="card-header">
-			<div class="container">
+			<div class="container-fluid">
 				<form class="form-inline" action="javascript:update();">
 					<div class="form-group mb-2">
 						<label class="mr-3" class="mr-3" for="city">المدينة</label>
 						<select id="city" class="form-control mr-2" size="1" onchange="updateHeader()"></select>
-						<label class="mr-3" for="latitude">خط ارتفاع</label>
+						<label class="mr-3" for="latitude">خط عرض</label>
 						<input id="latitude" class="form-control mr-2" type="text" value="29.3833" size="7" maxlength="7" onchange="update();" />
 						<label class="mr-3" for="longitude">خط طول</label>
 						<input id="longitude" class="form-control  mr-2" type="text" value="48" size="7" maxlength="7" onchange="update();" />
 						<label class="mr-3" for="timezone">منطقة زمنية</label>
 						<input id="timezone" class="form-control  mr-2" type="text" value="3" size="3" onchange="update();" />
+						<br />
 						<label class="mr-3" for="dst">توقيت صيفي</label>
 						<select id="dst" class="form-control  mr-2" size="1" onchange="toggleManualForm()">
 							<option value="auto" selected="selected">تلقائي</option>
