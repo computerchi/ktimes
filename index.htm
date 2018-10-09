@@ -119,11 +119,11 @@
 	</div>
 	<br />
 
-	<div id="qibla" class="compass">
+	<!-- <div id="qibla" class="compass">
 		<p>
 			&#x279C;
 		</p>
-	</div>
+	</div> -->
 
 	<script type="text/javascript">
 		var currentDate = new Date();
@@ -269,10 +269,10 @@
 			removeAllChild($('timetable'));
 			$('timetable').appendChild(tbody);
 
-			var lat = $('latitude').value;
-			var lng = $('longitude').value;
-			var dir = spt.getQiblaDirection(lat, lng);
-			$('qibla').style.transform = 'rotate(' + (dir - 90).toFixed(0) + 'deg)';
+			// var lat = $('latitude').value;
+			// var lng = $('longitude').value;
+			// var dir = spt.getQiblaDirection(lat, lng);
+			// $('qibla').style.transform = 'rotate(' + (dir - 90).toFixed(0) + 'deg)';
 		}
 
 		// make a table row
