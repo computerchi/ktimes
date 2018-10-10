@@ -2,7 +2,7 @@
 <html lang="ar">
 
 <head>
-	<title> Monthly Shia Prayer Timetable </title>
+	<title> jTimes </title>
 	<link rel="stylesheet" type="text/css" media="screen" href="bootstrap.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
 
@@ -118,12 +118,6 @@
 		<a id="time-format" href="javascript:switchFormat(1)" title="تغيير نمط التوقيت" class="command"></a>
 	</div>
 	<br />
-
-	<!-- <div id="qibla" class="compass">
-		<p>
-			&#x279C;
-		</p>
-	</div> -->
 
 	<script type="text/javascript">
 		var currentDate = new Date();
@@ -268,11 +262,6 @@
 			}
 			removeAllChild($('timetable'));
 			$('timetable').appendChild(tbody);
-
-			// var lat = $('latitude').value;
-			// var lng = $('longitude').value;
-			// var dir = spt.getQiblaDirection(lat, lng);
-			// $('qibla').style.transform = 'rotate(' + (dir - 90).toFixed(0) + 'deg)';
 		}
 
 		// make a table row
