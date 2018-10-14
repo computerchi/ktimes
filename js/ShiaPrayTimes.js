@@ -21,6 +21,8 @@ class ShiaPrayTimes {
       maghrib: "15 min",
       isha: 14
     });
+
+    // this.testEaster();
   }
 
   times(date, lat, lng, timeZone, format, dstType, dstDates) {
@@ -35,7 +37,7 @@ class ShiaPrayTimes {
     this.date = new Date(date);
     this.longitude = lng;
     this.latitude = lat;
-    this.julianDate = this.julianFromGregorian(
+    this.julianDay = this.julianDayFromGregorian(
       date.getFullYear(),
       date.getMonth() + 1,
       date.getDate()
@@ -146,8 +148,8 @@ class ShiaPrayTimes {
       date.getMonth() + 1
     )}-${date.getDate()}`;
 
-    let hijriDate = this.hijriFromJulian(
-      this.julianFromGregorian(
+    let hijriDate = this.hijriFromJulianDay(
+      this.julianDayFromGregorian(
         date.getFullYear(),
         date.getMonth() + 1,
         date.getDate()
@@ -159,7 +161,7 @@ class ShiaPrayTimes {
       ${this.getHijriMonthName(hijriDate.month)}-
       ${hijriDate.year}`;
 
-    goodTimes.juliandate = this.julianDate;
+    goodTimes.julianday = this.julianDay;
 
     goodTimes.dayname = dayNames[date.getDay()];
     goodTimes.persiandayname = farsiDayNames[date.getDay()];
@@ -201,13 +203,13 @@ class ShiaPrayTimes {
     return goodTimes;
   }
 
-  julianFromGregorian(year, month, day) {
+  julianDayFromGregorian(year, month, day) {
     return this.prayTimes.julian(year, month, day);
   }
 
   // convert Julian day to Gregorian date
   // Ref: Mohammed Shawkat Oudeh
-  gregorianFromJulian(jd) {
+  gregorianFromJulianDay(jd) {
     let l = jd + 68569;
     let n = Math.round((4 * l) / 146097);
     l = l - Math.round((146097 * n + 3) / 4);
@@ -230,7 +232,7 @@ class ShiaPrayTimes {
 
   // convert Julian day to Hijri date
   // Ref: Mohammed Shawkat Oudeh
-  hijriFromJulian(jd) {
+  hijriFromJulianDay(jd) {
     let l = Math.round(jd) - 1948440 + 10632;
     let n = Math.round((l - 1) / 10631);
     l = l - 10631 * n + 354;
@@ -249,7 +251,7 @@ class ShiaPrayTimes {
     return { year, month, day };
   }
 
-  julianFromHijri(year, month, day) {
+  julianDayFromHijri(year, month, day) {
     return (
       Math.round((11 * year + 3) / 30) +
       Math.round(354 * year) +
@@ -278,6 +280,69 @@ class ShiaPrayTimes {
     ];
 
     return hijriMonthNames[month - 1];
+  }
+
+  calcGregorianEaster(year) {
+    if (year >= 1583) {
+      let a = year % 19;
+      let b = Math.floor(year / 100);
+      let c = year % 100;
+      let d = Math.floor(b / 4);
+      let e = b % 4;
+      let f = Math.floor((b + 8) / 25);
+      let g = Math.floor((b - f + 1) / 3);
+      let h = (19 * a + b - d - g + 15) % 30;
+      let i = Math.floor(c / 4);
+      let k = c % 4;
+      let l = (32 + 2 * e + 2 * i - h - k) % 7;
+      let m = Math.floor((a + 11 * h + 22 * l) / 451);
+      let r = h + l - 7 * m + 114;
+      let month = Math.floor(r / 31);
+      let day = (r % 31) + 1;
+      return { year, month, day };
+    } else {
+      let { month, day } = this.calcJulianEaster(year);
+
+      return { year, month, day };
+    }
+  }
+
+  calcJulianEaster(year) {
+    let a = year % 4;
+    let b = year % 7;
+    let c = year % 19;
+    let d = (19 * c + 15) % 30;
+    let e = (2 * a + 4 * b - d + 34) % 7;
+    let r = d + e + 144;
+    let month = Math.floor(r / 31) - 1;
+    let day = (r % 31) + 2;
+
+    return { year, month, day };
+  }
+
+  testEaster() {
+    let years = [
+      179,
+      711,
+      1243,
+      1234,
+      1582,
+      1583,
+      1818,
+      1978,
+      1979,
+      1980,
+      2000,
+      2285
+    ];
+
+    for (let i in years) {
+      let ge = this.calcGregorianEaster(years[i]);
+      console.log("Gregorian Easter ", ge.year, ge.month, ge.day);
+
+      let je = this.calcJulianEaster(years[i]);
+      console.log("Julian Easter ", je.year, je.month, je.day);
+    }
   }
 
   addMinutes(time, mins) {
@@ -645,7 +710,7 @@ class ShiaPrayTimes {
 
   getSunAltitude(timeStr) {
     var decl = this.prayTimes.sunPosition(
-      this.julianDate + this.timeStringToDayPortion(timeStr)
+      this.julianDay + this.timeStringToDayPortion(timeStr)
     ).declination;
 
     var dir = "S";
@@ -678,7 +743,7 @@ class ShiaPrayTimes {
     var COLAT = Math.PI / 2 - GP;
     var decl =
       (this.prayTimes.sunPosition(
-        this.julianDate + this.timeStringToDayPortion(timeStr)
+        this.julianDay + this.timeStringToDayPortion(timeStr)
       ).declination *
         Math.PI) /
       180;

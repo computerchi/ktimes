@@ -82,18 +82,30 @@
 		</div>
 	</div>
 	<br />
+	<div align="center">
+		<table>
+			<tr>
+				<td>
+					<a href="javascript:displayMonth(-1)" title="الشهر السابق" class="btn btn-outline-info btn-sm">&#9654; السابق</a>
+				</td>
+				<td id="year" class="caption"></td>
+				<td id="monthE" class="caption"></td>
+				<td id="monthR" class="caption"></td>
+				<td id="monthS" class="caption"></td>
+				<td>
+					<a href="javascript:displayMonth(+1)" title="الشهر التالي" class="btn btn-outline-info btn-sm"> التالي &#9664;</a>
+				</td>
+			</tr>
+		</table>
+	</div>
 	<table align="center">
 		<tr>
-			<td>
-				<a href="javascript:displayMonth(-1)" title="الشهر السابق" class="btn btn-outline-info btn-sm">&#9654; السابق</a>
-			</td>
-			<td id="year" class="caption"></td>
-			<td id="monthE" class="caption"></td>
-			<td id="monthR" class="caption"></td>
-			<td id="monthS" class="caption"></td>
-			<td>
-				<a href="javascript:displayMonth(+1)" title="الشهر التالي" class="btn btn-outline-info btn-sm"> التالي &#9664;</a>
-			</td>
+			<td class="caption">الفصح الميلادي</td>
+			<td id="gEaster" class="caption">gEaster</td>
+		</tr>
+		<tr>
+			<td class="caption">الفصح اليولياني</td>
+			<td id="jEaster" class="caption">jEaster</td>
 		</tr>
 	</table>
 
@@ -239,6 +251,13 @@
 			var format = timeFormat ? '12hNS' : '24h';
 
 			var spt = new ShiaPrayTimes();
+
+			const gEaster = spt.calcGregorianEaster(year);
+			$("gEaster").innerHTML = `${gEaster.year}-${gEaster.month}-${gEaster.day}`;
+
+			const jEaster = spt.calcJulianEaster(year);
+			$("jEaster").innerHTML = `${jEaster.year}-${jEaster.month}-${jEaster.day}`;
+
 
 			while (date < endDate) {
 				var times = spt.times(date, lat, lng, timeZone, format, dst, dstDates);
