@@ -1,3 +1,5 @@
+//import CalendarTool from "../lib/calendarTool";
+
 //
 //	ShiaPrayTimes.js
 //	Developed by Ali Mahdi, ©2018
@@ -9,7 +11,7 @@
 //	By Eng. Mohammed Ali Alsaegh.
 //
 
-"use strict";
+("use strict");
 
 class ShiaPrayTimes {
   constructor() {
@@ -23,6 +25,9 @@ class ShiaPrayTimes {
     });
 
     // this.testEaster();
+    var ct = new CalendarTool(2018, 10, 15);
+    ct.printAll();
+    debugger;
   }
 
   times(date, lat, lng, timeZone, format, dstType, dstDates) {
@@ -218,9 +223,38 @@ class ShiaPrayTimes {
     let j = Math.round((80 * l) / 2447);
     let day = l - Math.round((2447 * j) / 80);
     l = Math.round(j / 11);
-    let month = i + 2 - 12 * l;
+    let month = ((i + 2 - 12 * l) % 12) + 1;
     let year = 100 * (n - 49) + i + l;
 
+    return { year, month, day };
+  }
+
+  //  * Calculates the julian day number (JDN) from Julian calendar dates. This
+  //  * integer number corresponds to the noon of the date (i.e. 12 hours of
+  //  * Universal Time). This method was tested to be good (valid) since 1 March,
+  //  * -100100 (of both calendars) up to a few millions (10^6) years into the
+  //  * future. The algorithm is based on D.A.Hatcher, Q.Jl.R.Astron.Soc. 25(1984),
+  //  * 53-55 slightly modified by K.M. Borkowski, Post.Astron. 25(1987), 275-279.
+  julianDayFromJulianDate(year, month, day) {
+    return (
+      Math.floor(((year + Math.floor((month - 8) / 6) + 100100) * 1461) / 4) +
+      Math.floor((153 * ((month + 9) % 12) + 2) / 5) +
+      day -
+      34840408
+    );
+  }
+
+  //  * Calculates Julian calendar dates from the julian day number (JDN) for the
+  //  * period since JDN=-34839655 (i.e. the year -100100 of both calendars) to
+  //  * some millions (10^6) years ahead of the present. The algorithm is based on
+  //  * D.A. Hatcher, Q.Jl.R.Astron.Soc. 25(1984), 53-55 slightly modified by K.M.
+  //  * Borkowski, Post.Astron. 25(1987), 275-279).
+  julianDateFromJulianDay(jd) {
+    let j = 4 * Math.floor(jd) + 139361631;
+    let i = Math.floor((j % 1461) / 4) * 5 + 308;
+    let day = Math.floor((i % 153) / 5) + 1;
+    let month = (Math.floor(i / 153) % 12) + 1;
+    let year = Math.floor(j / 1461) - 100100 + Math.floor((8 - month) / 6) + 1; // +1 added by Ali Mahdi
     return { year, month, day };
   }
 
