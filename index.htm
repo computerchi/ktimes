@@ -169,6 +169,15 @@
 		// make monthly timetable
 		function makeTable(year, month, lat, lng, timeZone, dst, dstDates) {
 			var items = [
+				//Taqweem
+				{
+					day: 'تاريخ',
+					fajr: 'أذان الفجر',
+					sunrise: 'شروق',
+					athandhuhr: 'أذان الظهر',
+					maghrib: 'أذان المغرب',
+					midnight: 'منتصف الليل'
+				},
 				//Imsakiya
 				{
 					day: 'تاريخ',
@@ -180,15 +189,6 @@
 					sunset: 'غروب',
 					maghrib: 'أذان المغرب',
 					isha: 'العشاء',
-					midnight: 'منتصف الليل'
-				},
-				//Taqweem
-				{
-					day: 'تاريخ',
-					fajr: 'أذان الفجر',
-					sunrise: 'شروق',
-					athandhuhr: 'أذان الظهر',
-					maghrib: 'أذان المغرب',
 					midnight: 'منتصف الليل'
 				},
 				//Calendars
