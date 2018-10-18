@@ -71,11 +71,14 @@ class ShiaPrayTimes {
       anwaa: "Anwaa",
       mawasem: "Mawasem",
       date: "Date",
+      arabicdayname: "Arabic Day Name",
       hijridate: "Hijri Date",
+      hijrimonth: "Hijri Month",
+      persiandayname: "Persian Day Name",
+      persianmonth: "Persian Month",
+      persiandate: "Persian date",
       dayname: "Day Name",
       frenchdayname: "French Day Name",
-      persiandayname: "Persian Day Name",
-      arabicdayname: "Arabic Day Name",
       sahar: "Sahar",
       imsak: "Imsak",
       fajr: "Athanul Fajr",
@@ -157,6 +160,8 @@ class ShiaPrayTimes {
       date.getMonth() + 1
     )}-${date.getDate()}`;
 
+    goodTimes.arabicdayname = arabicDayNames[date.getDay()];
+
     let hijriDate = this.hijriFromJulianDay(
       this.julianDayFromGregorian(
         date.getFullYear(),
@@ -165,17 +170,18 @@ class ShiaPrayTimes {
       )
     );
 
-    goodTimes.hijridate = `
-      ${hijriDate.day}-
-      ${this.getHijriMonthName(hijriDate.month)}-
-      ${hijriDate.year}`;
-
+    goodTimes.hijridate = `${hijriDate.day}-
+                          ${hijriDate.month}-
+                          ${hijriDate.year}`;
+    goodTimes.hijrimonth = this.getHijriMonthName(hijriDate.month);
     goodTimes.julianday = this.julianDay;
 
-    goodTimes.dayname = dayNames[date.getDay()];
     goodTimes.persiandayname = farsiDayNames[date.getDay()];
+    goodTimes.persiandate = this.ct.iranianDate;
+    goodTimes.persianmonth = this.ct.iranianMonthName;
+
+    goodTimes.dayname = dayNames[date.getDay()];
     goodTimes.frenchdayname = frenchDayNames[date.getDay()];
-    goodTimes.arabicdayname = arabicDayNames[date.getDay()];
     goodTimes.suhail = this.getSuhail();
     goodTimes.nawruz = this.getNawruz();
     goodTimes.anwaa = this.getAnwaa();
@@ -220,14 +226,14 @@ class ShiaPrayTimes {
   // Ref: Mohammed Shawkat Oudeh
   gregorianFromJulianDay(jd) {
     let l = jd + 68569;
-    let n = Math.round((4 * l) / 146097);
-    l = l - Math.round((146097 * n + 3) / 4);
-    let i = Math.round((4000 * (l + 1)) / 1461001);
-    l = l - Math.round((1461 * i) / 4 + 31);
-    let j = Math.round((80 * l) / 2447);
-    let day = l - Math.round((2447 * j) / 80);
-    l = Math.round(j / 11);
-    let month = ((i + 2 - 12 * l) % 12) + 1;
+    let n = div(4 * l, 146097);
+    l = l - div(146097 * n + 3, 4);
+    let i = div(4000 * (l + 1), 1461001);
+    l = l - div(1461 * i, 4 + 31);
+    let j = div(80 * l, 2447);
+    let day = l - div(2447 * j, 80);
+    l = div(j, 11);
+    let month = mod(i + 2 - 12 * l, 12) + 1;
     let year = 100 * (n - 49) + i + l;
 
     return { year, month, day };
@@ -258,30 +264,30 @@ class ShiaPrayTimes {
   // convert Julian day to Hijri date
   // Ref: Mohammed Shawkat Oudeh
   hijriFromJulianDay(jd) {
-    let l = Math.round(jd) - 1948440 + 10632;
-    let n = Math.round((l - 1) / 10631);
+    let l = ~~jd - 1948440 + 10632;
+    let n = div(l - 1, 10631);
     l = l - 10631 * n + 354;
     let j =
-      Math.round((10985 - l) / 5316) * Math.round((50 * l) / 17719) +
-      Math.round(l / 5670) * Math.round((43 * l) / 15238);
+      div(10985 - l, 5316) * div(50 * l, 17719) +
+      div(l, 5670) * div(43 * l, 15238);
     l =
       l -
-      Math.round((30 - j) / 15) * Math.round((17719 * j) / 50) -
-      Math.round(j / 16) * Math.round((15238 * j) / 43) +
+      div(30 - j, 15) * div(17719 * j, 50) -
+      div(j, 16) * div(15238 * j, 43) +
       29;
-    let month = Math.round((24 * l) / 709);
-    let day = l - Math.round((709 * month) / 24);
-    let year = Math.round(30 * n + j - 30);
+    let month = div(24 * l, 709);
+    let day = l - div(709 * month, 24);
+    let year = 30 * n + j - 30;
 
     return { year, month, day };
   }
 
   julianDayFromHijri(year, month, day) {
     return (
-      Math.round((11 * year + 3) / 30) +
-      Math.round(354 * year) +
-      Math.round(30 * month) -
-      Math.round((month - 1) / 2) +
+      div(11 * year + 3, 30) +
+      354 * year +
+      30 * month -
+      div(month - 1, 2) +
       day +
       1948440 -
       385
@@ -309,21 +315,21 @@ class ShiaPrayTimes {
 
   calcGregorianEaster(year) {
     if (year >= 1583) {
-      let a = year % 19;
-      let b = Math.floor(year / 100);
-      let c = year % 100;
-      let d = Math.floor(b / 4);
-      let e = b % 4;
-      let f = Math.floor((b + 8) / 25);
-      let g = Math.floor((b - f + 1) / 3);
-      let h = (19 * a + b - d - g + 15) % 30;
-      let i = Math.floor(c / 4);
-      let k = c % 4;
-      let l = (32 + 2 * e + 2 * i - h - k) % 7;
-      let m = Math.floor((a + 11 * h + 22 * l) / 451);
+      let a = mod(year, 19);
+      let b = div(year, 100);
+      let c = mod(year, 100);
+      let d = div(b, 4);
+      let e = mod(b, 4);
+      let f = div(b + 8, 25);
+      let g = div(b - f + 1, 3);
+      let h = mod(19 * a + b - d - g + 15, 30);
+      let i = div(c, 4);
+      let k = mod(c, 4);
+      let l = mod(32 + 2 * e + 2 * i - h - k, 7);
+      let m = div(a + 11 * h + 22 * l, 451);
       let r = h + l - 7 * m + 114;
-      let month = Math.floor(r / 31);
-      let day = (r % 31) + 1;
+      let month = div(r, 31);
+      let day = mod(r, 31) + 1;
       return { year, month, day };
     } else {
       let { month, day } = this.calcJulianEaster(year);
@@ -333,14 +339,14 @@ class ShiaPrayTimes {
   }
 
   calcJulianEaster(year) {
-    let a = year % 4;
-    let b = year % 7;
-    let c = year % 19;
-    let d = (19 * c + 15) % 30;
-    let e = (2 * a + 4 * b - d + 34) % 7;
+    let a = mod(year, 4);
+    let b = mod(year, 7);
+    let c = mod(year, 19);
+    let d = mod(19 * c + 15, 30);
+    let e = mod(2 * a + 4 * b - d + 34, 7);
     let r = d + e + 144;
-    let month = Math.floor(r / 31) - 1;
-    let day = (r % 31) + 2;
+    let month = div(r, 31) - 1;
+    let day = mod(r, 31) + 2;
 
     return { year, month, day };
   }
@@ -388,16 +394,9 @@ class ShiaPrayTimes {
     var month = this.date.getMonth() + 1;
     var day = this.date.getDate();
     if (this.isLeapYear) {
-      return (
-        Math.floor((275 * month) / 9) - Math.floor((month + 9) / 12) + day - 30
-      );
+      return div(275 * month, 9) - div(month + 9, 12) + day - 30;
     } else {
-      return (
-        Math.floor((275 * month) / 9) -
-        2 * Math.floor((month + 9) / 12) +
-        day -
-        30
-      );
+      return div(275 * month, 9) - 2 * div(month + 9, 12) + day - 30;
     }
   }
 
