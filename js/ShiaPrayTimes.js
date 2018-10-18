@@ -77,6 +77,7 @@ class ShiaPrayTimes {
       persiandayname: "Persian Day Name",
       persianmonth: "Persian Month",
       persiandate: "Persian date",
+      persiandate: "Julian date",
       dayname: "Day Name",
       frenchdayname: "French Day Name",
       sahar: "Sahar",
@@ -179,7 +180,7 @@ class ShiaPrayTimes {
     goodTimes.persiandayname = farsiDayNames[date.getDay()];
     goodTimes.persiandate = this.ct.iranianDate;
     goodTimes.persianmonth = this.ct.iranianMonthName;
-
+    goodTimes.juliandate = this.ct.julianDate;
     goodTimes.dayname = dayNames[date.getDay()];
     goodTimes.frenchdayname = frenchDayNames[date.getDay()];
     goodTimes.suhail = this.getSuhail();
@@ -299,7 +300,7 @@ class ShiaPrayTimes {
       "محرم",
       "صفر",
       "ربيع الاول",
-      "ربيع الثاني",
+      "ربيع الاخر",
       "جمادى الاولى",
       "جمادى الاخرة",
       "رجب",
