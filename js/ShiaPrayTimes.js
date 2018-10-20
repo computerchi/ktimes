@@ -50,7 +50,6 @@ class ShiaPrayTimes {
       date.getMonth() + 1,
       date.getDate()
     );
-    debugger;
     this.timeZone = Number(timeZone);
     this.format = format;
     var year = date.getFullYear();
