@@ -264,7 +264,7 @@ class ShiaPrayTimes {
   // convert Julian day to Hijri date
   // Ref: Mohammed Shawkat Oudeh
   hijriFromJulianDay(jd) {
-    let l = ~~jd - 1948440 + 10632;
+    let l = Math.round(jd) - 1948440 + 10632; // Ali Mahdi: rounding jd brings it closer to existing clacs. Tested on 2018 only.
     let n = div(l - 1, 10631);
     l = l - 10631 * n + 354;
     let j =
