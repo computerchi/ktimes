@@ -25,7 +25,8 @@ class ShiaPrayTimes {
     });
 
     // this.testEaster();
-    this.ct = new CalendarTool(2018, 10, 15);
+    this.persianCal = new CalendarTool(2018, 10, 15);
+    this.cobticCal = new CobticCalendar();
   }
 
   times(date, lat, lng, timeZone, format, dstType, dstDates) {
@@ -45,7 +46,7 @@ class ShiaPrayTimes {
       date.getMonth() + 1,
       date.getDate()
     );
-    this.ct.setGregorianDate(
+    this.persianCal.setGregorianDate(
       date.getFullYear(),
       date.getMonth() + 1,
       date.getDate()
@@ -76,7 +77,9 @@ class ShiaPrayTimes {
       persiandayname: "Persian Day Name",
       persianmonth: "Persian Month",
       persiandate: "Persian date",
-      persiandate: "Julian date",
+      cobticmonth: "الشهر القبطي",
+      cobticdate: "التاريخ القبطي",
+      juliandate: "Julian date",
       dayname: "Day Name",
       frenchdayname: "French Day Name",
       sahar: "Sahar",
@@ -177,9 +180,22 @@ class ShiaPrayTimes {
     goodTimes.julianday = this.julianDay;
 
     goodTimes.persiandayname = farsiDayNames[date.getDay()];
-    goodTimes.persiandate = this.ct.iranianDate;
-    goodTimes.persianmonth = this.ct.iranianMonthName;
-    goodTimes.juliandate = this.ct.julianDate;
+    goodTimes.persiandate = this.persianCal.iranianDate;
+    goodTimes.persianmonth = this.persianCal.iranianMonthName;
+
+    let cobticDate = this.cobticCal.getCobticDate(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      date.getDate()
+    );
+
+    goodTimes.cobticdate = `${cobticDate.day}-
+                            ${cobticDate.month}-
+                            ${cobticDate.year}`;
+
+    goodTimes.cobticmonth = this.cobticCal.getCobticMonthName(cobticDate.month);
+
+    goodTimes.juliandate = this.persianCal.julianDate;
     goodTimes.dayname = dayNames[date.getDay()];
     goodTimes.frenchdayname = frenchDayNames[date.getDay()];
     goodTimes.suhail = this.getSuhail();
@@ -240,8 +256,8 @@ class ShiaPrayTimes {
   }
 
   julianDayFromJulianDate(year, month, day) {
-    this.ct.setJulianDate(year, month, day);
-    return this.ct.jdn;
+    this.persianCal.setJulianDate(year, month, day);
+    return this.persianCal.jdn;
   }
 
   julianDateFromJulianDay(jd) {
