@@ -33,6 +33,7 @@
 	<!-- Load libraries -->
 	<script type="text/javascript" src="./lib/PrayTimes.js"></script>
 	<script type="text/javascript" src="./lib/calendarTool.js"></script>
+	<script type="text/javascript" src="./lib/jewishCalendar.js"></script>
 	<script type="text/javascript" src="./js/ShiaPrayTimes.js"></script>
 
 	<div class="card">
@@ -286,6 +287,9 @@
 			const jEaster = spt.calcJulianEaster(year);
 			$("jEaster").innerHTML = `${jEaster.year}-${jEaster.month}-${jEaster.day}`;
 
+			var jc = new JewishCalindar;
+			const hEaster = jc.getPesachDate(year);
+			$("hEaster").innerHTML = `${hEaster.year}-${hEaster.month}-${hEaster.day}`;
 
 			while (date < endDate) {
 				var times = spt.times(date, lat, lng, timeZone, format, dst, dstDates);
