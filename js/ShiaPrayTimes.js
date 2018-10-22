@@ -177,23 +177,25 @@ class ShiaPrayTimes {
                           ${hijriDate.month}-
                           ${hijriDate.year}`;
     goodTimes.hijrimonth = this.getHijriMonthName(hijriDate.month);
+    goodTimes.hijrishort = `${hijriDate.day} ${goodTimes.hijrimonth}`;
     goodTimes.julianday = this.julianDay;
 
     goodTimes.persiandayname = farsiDayNames[date.getDay()];
     goodTimes.persiandate = this.persianCal.iranianDate;
     goodTimes.persianmonth = this.persianCal.iranianMonthName;
 
-    let cobticDate = this.cobticCal.getCobticDate(
+    this.cobticCal.setGregorianDate(
       date.getFullYear(),
       date.getMonth() + 1,
       date.getDate()
     );
+    let cobticDate = this.cobticCal.cobticDate;
 
     goodTimes.cobticdate = `${cobticDate.day}-
                             ${cobticDate.month}-
                             ${cobticDate.year}`;
 
-    goodTimes.cobticmonth = this.cobticCal.getCobticMonthName(cobticDate.month);
+    goodTimes.cobticmonth = this.cobticCal.getCobticMonthName;
 
     goodTimes.juliandate = this.persianCal.julianDate;
     goodTimes.dayname = dayNames[date.getDay()];
