@@ -2,8 +2,10 @@
 <html lang="ar">
 
 <head>
-
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>jTimes</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" media="screen" href="./css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="./css/styles.css" />
 
@@ -44,7 +46,7 @@
 					<div class="form-group mb-2">
 						<label class="mr-3" class="mr-3" for="city">المدينة</label>
 						<select id="city" class="form-control mr-2" size="1" onchange="updateHeader()"></select>
-						<label class="mr-3" for="latitude">خط ارتفاع</label>
+						<label class="mr-3" for="latitude">خط عرض</label>
 						<input id="latitude" class="form-control mr-2" type="text" value="29.3833" size="7" maxlength="7" onchange="update();" />
 						<label class="mr-3" for="longitude">خط طول</label>
 						<input id="longitude" class="form-control  mr-2" type="text" value="48" size="7" maxlength="7" onchange="update();" />
@@ -193,8 +195,8 @@
 				//Tadqeeq
 				{
 					day: 'تاريخ',
-					arabicdayname: 'اسم اليوم',
-					hijrishort: 'التاريخ الهجري',
+					arabicdayname: 'اليوم',
+					hijrishort: 'هجري',
 					fajr: 'أذان الفجر',
 					subh: 'صلاة الصبح',
 					sunrise: 'شروق',
@@ -209,6 +211,7 @@
 					day: 'تاريخ',
 					imsak: 'إمساك',
 					fajr: 'أذان الفجر',
+					subh: 'صلاة الصبح',
 					sunrise: 'شروق',
 					athandhuhr: 'أذان الظهر',
 					asr: 'العصر',
@@ -302,14 +305,14 @@
 			var spt = new ShiaPrayTimes();
 
 			const gEaster = spt.calcGregorianEaster(year);
-			$("gEaster").innerHTML = `${gEaster.year}-${gEaster.month}-${gEaster.day}`;
+			$("gEaster").innerHTML = `${gEaster.day}-${gEaster.month}-${gEaster.year}`;
 
 			const jEaster = spt.calcJulianEaster(year);
-			$("jEaster").innerHTML = `${jEaster.year}-${jEaster.month}-${jEaster.day}`;
+			$("jEaster").innerHTML = `${jEaster.day}-${jEaster.month}-${jEaster.year}`;
 
 			var jc = new JewishCalindar;
 			const hEaster = jc.getPesachDate(year);
-			$("hEaster").innerHTML = `${hEaster.year}-${hEaster.month}-${hEaster.day}`;
+			$("hEaster").innerHTML = `${hEaster.day}-${hEaster.month}-${year}`;
 
 			while (date < endDate) {
 				var times = spt.times(date, lat, lng, timeZone, format, dst, dstDates);

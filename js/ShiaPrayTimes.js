@@ -64,49 +64,49 @@ class ShiaPrayTimes {
 
     // the values are not important, just a place holder
     var goodTimes = {
-      day: "Day",
-      daysequence: "*",
-      suhail: "Suhail",
-      nawruz: "Nawruz",
-      anwaa: "Anwaa",
-      mawasem: "Mawasem",
-      date: "Date",
-      arabicdayname: "Arabic Day Name",
-      hijridate: "Hijri Date",
-      hijrimonth: "Hijri Month",
-      persiandayname: "Persian Day Name",
-      persianmonth: "Persian Month",
-      persiandate: "Persian date",
-      cobticmonth: "الشهر القبطي",
-      cobticdate: "التاريخ القبطي",
-      juliandate: "Julian date",
-      dayname: "Day Name",
-      frenchdayname: "French Day Name",
-      sahar: "Sahar",
+      // day: "Day",
+      // daysequence: "*",
+      // suhail: "Suhail",
+      // nawruz: "Nawruz",
+      // anwaa: "Anwaa",
+      // mawasem: "Mawasem",
+      // date: "Date",
+      // arabicdayname: "Arabic Day Name",
+      // hijridate: "Hijri Date",
+      // hijrimonth: "Hijri Month",
+      // persiandayname: "Persian Day Name",
+      // persianmonth: "Persian Month",
+      // persiandate: "Persian date",
+      // cobticmonth: "الشهر القبطي",
+      // cobticdate: "التاريخ القبطي",
+      // juliandate: "Julian date",
+      // dayname: "Day Name",
+      // frenchdayname: "French Day Name",
+      // sahar: "Sahar",
       imsak: "Imsak",
       fajr: "Athanul Fajr",
-      subh: "Salatus Subh",
-      endfadilatsubh: "End of Fadilatul Subh",
+      // subh: "Salatus Subh",
+      // endfadilatsubh: "End of Fadilatul Subh",
       sunrise: "Sunrise",
-      qiblatime: "Qibla Time",
-      samtulqiblatime: "Samtul Qibla Time",
+      // qiblatime: "Qibla Time",
+      // samtulqiblatime: "Samtul Qibla Time",
       dhuhr: "Noon",
-      sunaltitude: "Sun Altitude",
-      shadow: "Shadow",
-      athandhuhr: 0,
-      dhuhrshadow: "Dhuhr Shadow",
-      fadilatasr: "Beginning Fadilatul Asr",
-      fadasrshadow: "Fadilatul Asr Shadow",
-      endfadilatduhr: "End Fadilatul Duhr",
-      endfadilatasr: "End Fadilatul Asr",
+      // sunaltitude: "Sun Altitude",
+      // shadow: "Shadow",
+      // athandhuhr: 0,
+      // dhuhrshadow: "Dhuhr Shadow",
+      // fadilatasr: "Beginning Fadilatul Asr",
+      // fadasrshadow: "Fadilatul Asr Shadow",
+      // endfadilatduhr: "End Fadilatul Duhr",
+      // endfadilatasr: "End Fadilatul Asr",
       asr: "Asr",
-      asrshadow: "Asr Shadow",
+      // asrshadow: "Asr Shadow",
       sunset: "Sunset",
       maghrib: "Athanul Maghrib",
       isha: "Isha",
-      midnight: "Midnight",
-      truezodiac: "True Zodiac",
-      standardzodiac: "Standard Zodiac"
+      midnight: "Midnight"
+      // truezodiac: "True Zodiac",
+      // standardzodiac: "Standard Zodiac"
     };
 
     var dayNames = [
@@ -159,9 +159,9 @@ class ShiaPrayTimes {
     goodTimes.athandhuhr = this.addMinutes(goodTimes.dhuhr, 2);
     goodTimes.daysequence = this.daySequence;
 
-    goodTimes.date = `${date.getFullYear()}-${Number(
+    goodTimes.date = `${date.getDate()}-${Number(
       date.getMonth() + 1
-    )}-${date.getDate()}`;
+    )}-${date.getFullYear()}`;
 
     goodTimes.arabicdayname = arabicDayNames[date.getDay()];
 
@@ -173,30 +173,25 @@ class ShiaPrayTimes {
       )
     );
 
-    goodTimes.hijridate = `${hijriDate.day}-
-                          ${hijriDate.month}-
-                          ${hijriDate.year}`;
+    goodTimes.hijridate = `${hijriDate.day}-${hijriDate.month}-${
+      hijriDate.year
+    }`;
     goodTimes.hijrimonth = this.getHijriMonthName(hijriDate.month);
     goodTimes.hijrishort = `${hijriDate.day} ${goodTimes.hijrimonth}`;
     goodTimes.julianday = this.julianDay;
-
     goodTimes.persiandayname = farsiDayNames[date.getDay()];
     goodTimes.persiandate = this.persianCal.iranianDate;
     goodTimes.persianmonth = this.persianCal.iranianMonthName;
-
     this.cobticCal.setGregorianDate(
       date.getFullYear(),
       date.getMonth() + 1,
       date.getDate()
     );
-    let cobticDate = this.cobticCal.cobticDate;
-
-    goodTimes.cobticdate = `${cobticDate.day}-
-                            ${cobticDate.month}-
-                            ${cobticDate.year}`;
-
-    goodTimes.cobticmonth = this.cobticCal.getCobticMonthName;
-
+    let cobticDate = this.cobticCal.date;
+    goodTimes.cobticdate = `${cobticDate.day}-${cobticDate.month}-${
+      cobticDate.year
+    }`;
+    goodTimes.cobticmonth = this.cobticCal.monthName;
     goodTimes.juliandate = this.persianCal.julianDate;
     goodTimes.dayname = dayNames[date.getDay()];
     goodTimes.frenchdayname = frenchDayNames[date.getDay()];
