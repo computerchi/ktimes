@@ -10,20 +10,6 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="./css/styles.css" />
 
 	<script>
-		var monthName = [
-			['January', 'يناير', 'كانون الثاني'],
-			['February', 'فبراير', 'شباط'],
-			['March', 'مارس', 'آذار'],
-			['April', 'إبريل', 'نيسان'],
-			['May', 'مايو', 'آيار'],
-			['June', 'يونيو', 'حزيران'],
-			['July', 'يوليو', 'تموز'],
-			['August', 'أغسطس', 'آب'],
-			['September', 'سبتمبر', 'أيلول'],
-			['October', 'أكتوبر', 'تشرين الأول'],
-			['November', 'نوفمبر', 'تشرين الثاني'],
-			['December', 'ديسمبر', 'كانون الأول']
-		];
 	</script>
 
 	<script type="text/javascript" src="./js/cityFile.js"></script>
@@ -115,9 +101,6 @@
 					<a href="javascript:displayMonth(-1)" title="الشهر السابق" class="btn btn-outline-secondary btn-sm">&#9654; السابق</a>
 				</td>
 				<td id="year" class="caption"></td>
-				<td id="monthE" class="caption"></td>
-				<td id="monthR" class="caption"></td>
-				<td id="monthS" class="caption"></td>
 				<td>
 					<a href="javascript:displayMonth(+1)" title="الشهر التالي" class="btn btn-outline-secondary btn-sm"> التالي
 						&#9664;</a>
@@ -176,13 +159,9 @@
 			var timeZone = $('timezone').value;
 			var dst = cityParams[selectedCity][4];
 
-			currentDate.setMonth(currentDate.getMonth() + 1 * offset);
-			var month = currentDate.getMonth();
+			currentDate.setFullYear(currentDate.getFullYear() + 1 * offset);
 			var year = currentDate.getFullYear();
 			$('year').innerHTML = year;
-			$('monthE').innerHTML = monthName[month][0];
-			$('monthR').innerHTML = monthName[month][1];
-			$('monthS').innerHTML = monthName[month][2];
 
 			var dstDates = [3, 1, 10, 1];
 			if ($('dst').value == 'manual') {
@@ -193,7 +172,7 @@
 				dst = 0;
 			}
 
-			makeTable(year, month, lat, lng, timeZone, dst, dstDates);
+			makeTable(year, 0, lat, lng, timeZone, dst, dstDates);
 		}
 
 		// make monthly timetable
@@ -244,9 +223,9 @@
 					arabicdayname: 'اسم اليوم',
 					hijrimonth: 'الشهر الهجري',
 					hijridate: 'التاريخ الهجري',
-					persiandayname: 'اليوم الفارسي',
-					persianmonth: 'الشهر الفارسي',
-					persiandate: 'التاريخ الفارسي',
+					persiandayname: 'اليوم الايراني',
+					persianmonth: 'الشهر الايراني',
+					persiandate: 'التاريخ الايراني',
 					cobticmonth: 'الشهر القبطي',
 					cobticdate: 'التاريخ القبطي',
 					juliandate: 'التاريخ الشرقي'
@@ -268,15 +247,21 @@
 				{
 					day: 'تاريخ',
 					daysequence: 'تسلسل',
-					date: 'التاريخ اليومي',
+					date: 'التاريخ الميلادي',
 					dayname: 'اليوم الانجليزي',
+					englishmonthname: 'الشهر الانجليزي',
 					frenchdayname: 'اليوم الفرنسي',
+					frenchmonthname: 'الشهر الفرنسي',
 					arabicdayname: 'اليوم العربي',
+					westernmonthname: 'الشهر الغربي',
+					easternmonthname: 'الشهر الشرقي',
+					kurdidayname: 'اليوم الكوردي',
+					kurdishmonthname: 'الشهر الكوردي',
 					hijrimonth: 'الشهر الهجري',
 					hijridate: 'التاريخ الهجري',
-					persiandayname: 'اليوم الفارسي',
-					persianmonth: 'الشهر الفارسي',
-					persiandate: 'التاريخ الفارسي',
+					persiandayname: 'اليوم الايراني',
+					persianmonth: 'الشهر الايراني',
+					persiandate: 'التاريخ الايراني',
 					cobticmonth: 'الشهر القبطي',
 					cobticdate: 'التاريخ القبطي',
 					sahar: 'السحر',
@@ -310,8 +295,8 @@
 				}
 			]
 
-			var date = new Date(year, month, 1);
-			var endDate = new Date(year, month + 1, 1);
+			var date = new Date(year, 0, 1);
+			var endDate = new Date(year + 1, 0, 1);
 			var format = timeFormat ? '12hNS' : '24h';
 
 			var spt = new ShiaPrayTimes();

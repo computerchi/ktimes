@@ -21,7 +21,7 @@ class ShiaPrayTimes {
       fajr: 18,
       dhuhr: 0,
       maghrib: "15 min",
-      isha: 14
+      isha: 17.5
     });
 
     // this.testEaster();
@@ -64,49 +64,15 @@ class ShiaPrayTimes {
 
     // the values are not important, just a place holder
     var goodTimes = {
-      // day: "Day",
-      // daysequence: "*",
-      // suhail: "Suhail",
-      // nawruz: "Nawruz",
-      // anwaa: "Anwaa",
-      // mawasem: "Mawasem",
-      // date: "Date",
-      // arabicdayname: "Arabic Day Name",
-      // hijridate: "Hijri Date",
-      // hijrimonth: "Hijri Month",
-      // persiandayname: "Persian Day Name",
-      // persianmonth: "Persian Month",
-      // persiandate: "Persian date",
-      // cobticmonth: "الشهر القبطي",
-      // cobticdate: "التاريخ القبطي",
-      // juliandate: "Julian date",
-      // dayname: "Day Name",
-      // frenchdayname: "French Day Name",
-      // sahar: "Sahar",
       imsak: "Imsak",
       fajr: "Athanul Fajr",
-      // subh: "Salatus Subh",
-      // endfadilatsubh: "End of Fadilatul Subh",
       sunrise: "Sunrise",
-      // qiblatime: "Qibla Time",
-      // samtulqiblatime: "Samtul Qibla Time",
       dhuhr: "Noon",
-      // sunaltitude: "Sun Altitude",
-      // shadow: "Shadow",
-      // athandhuhr: 0,
-      // dhuhrshadow: "Dhuhr Shadow",
-      // fadilatasr: "Beginning Fadilatul Asr",
-      // fadasrshadow: "Fadilatul Asr Shadow",
-      // endfadilatduhr: "End Fadilatul Duhr",
-      // endfadilatasr: "End Fadilatul Asr",
       asr: "Asr",
-      // asrshadow: "Asr Shadow",
       sunset: "Sunset",
       maghrib: "Athanul Maghrib",
       isha: "Isha",
       midnight: "Midnight"
-      // truezodiac: "True Zodiac",
-      // standardzodiac: "Standard Zodiac"
     };
 
     var dayNames = [
@@ -146,6 +112,91 @@ class ShiaPrayTimes {
       "السبت"
     ];
 
+    var kurdiDayNames = [
+      "یه‌كشه‌ممه‌",
+      "دووشه‌ممه‌",
+      "سێشه‌ممه‌",
+      "چوارشه‌ممه‌",
+      "پێنجشه‌مه‌",
+      "هه‌ینی",
+      "شه‌ممه‌"
+    ];
+
+    var englishMonthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+
+    var frenchMonthNames = [
+      "janvier",
+      "février",
+      "mars",
+      "avril",
+      "mai",
+      "juin",
+      "juillet",
+      "aout",
+      "septembre",
+      "octobre",
+      "novembre",
+      "décembre"
+    ];
+
+    var westernMonthNames = [
+      "يناير",
+      "فبراير",
+      "مارس",
+      "إبريل",
+      "مايو",
+      "يونيو",
+      "يوليو",
+      "أغسطس",
+      "سبتمبر",
+      "أكتوبر",
+      "نوفمبر",
+      "ديسمبر"
+    ];
+
+    var easternMonthNames = [
+      "كانون الثاني",
+      "شباط",
+      "آذار",
+      "نيسان",
+      "آيار",
+      "حزيران",
+      "تموز",
+      "آب",
+      "أيلول",
+      "تشرين الأول",
+      "تشرين الثاني",
+      "كانون الأول"
+    ];
+
+    var kurdishMonthNames = [
+      "ئازار",
+      "نیسان",
+      "ئایار",
+      "حوزەیران",
+      "تەمموز",
+      "ئاب",
+      "ئەیلوول",
+      "تشرینی یەکەم",
+      "تشرینی دووەم",
+      "کانوونی یەکەم",
+      "کانوونی دووەم",
+      "شوبات"
+    ];
+
     // fill the goodTimes with the library times, and '-' the undefined ones
     for (var i in goodTimes) {
       if (libTimes[i] != null) {
@@ -164,6 +215,7 @@ class ShiaPrayTimes {
     )}-${date.getFullYear()}`;
 
     goodTimes.arabicdayname = arabicDayNames[date.getDay()];
+    goodTimes.kurdidayname = kurdiDayNames[date.getDay()];
 
     let hijriDate = this.hijriFromJulianDay(
       this.julianDayFromGregorian(
@@ -173,8 +225,8 @@ class ShiaPrayTimes {
       )
     );
 
-    goodTimes.hijridate = `${hijriDate.day}-${hijriDate.month}-${
-      hijriDate.year
+    goodTimes.hijridate = `${hijriDate.year}-${hijriDate.month}-${
+      hijriDate.day
     }`;
     goodTimes.hijrimonth = this.getHijriMonthName(hijriDate.month);
     goodTimes.hijrishort = `${hijriDate.day} ${goodTimes.hijrimonth}`;
@@ -195,6 +247,11 @@ class ShiaPrayTimes {
     goodTimes.juliandate = this.persianCal.julianDate;
     goodTimes.dayname = dayNames[date.getDay()];
     goodTimes.frenchdayname = frenchDayNames[date.getDay()];
+    goodTimes.englishmonthname = englishMonthNames[date.getMonth()];
+    goodTimes.frenchmonthname = frenchMonthNames[date.getMonth()];
+    goodTimes.westernmonthname = westernMonthNames[date.getMonth()];
+    goodTimes.easternmonthname = easternMonthNames[date.getMonth()];
+    goodTimes.kurdishmonthname = kurdishMonthNames[date.getMonth()];
     goodTimes.suhail = this.getSuhail();
     goodTimes.nawruz = this.getNawruz();
     goodTimes.anwaa = this.getAnwaa();
