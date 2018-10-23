@@ -9,11 +9,8 @@ form {
   text-align: right;
 }
 
-.caption {
-  font-size: 20px;
-  color: #6c757d;
-  text-align: center;
-  width: 6em;
+#year {
+  font-weight: bold;
 }
 
 .head-row {
