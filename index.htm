@@ -131,11 +131,27 @@
 			<tbody></tbody>
 		</table>
 	</div>
-	<div align="center" style="margin-top: 7px">
-		نمط التوقيت:
-		<a id="time-format" href="javascript:switchFormat(1)" title="تغيير نمط التوقيت" class="command"></a>
+	<div class="container">
+		<div>
+		</div>
 	</div>
-	<br />
+	<div class="card">
+		<div class="card-header">
+
+			<div class="container">
+				<form class="form-inline">
+					<div class="form-group mb-2">
+						<button onclick="javascript:copyToClipboard();" type="button" class="btn btn-sm btn-outline-dark">نسخ الجدول</button>
+					</div>
+					<div class="form-group mx-sm-3 mb-2">
+						<label class="ml-2 mr-3">نمط التوقيت:</label>
+						<a id="time-format" href="javascript:switchFormat(1)" title="تغيير نمط التوقيت" class="command"></a>
+						<textarea id="dump"></textarea>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript">
 		var currentDate = new Date();
@@ -314,9 +330,14 @@
 			var tbody = document.createElement('thead');
 			tbody.appendChild(makeTableRow(items[tableType], items[tableType], 'head-row'));
 
+			let textDump = "";
+			$("dump").innerHTML = textDump;
+			textDump = makeDumpRow(items[tableType], items[tableType]);
+
 			while (date < endDate) {
 				var times = spt.times(date, lat, lng, timeZone, format, dst, dstDates);
 				times.day = date.getDate();
+				textDump += makeDumpRow(times, items[tableType]);
 				var today = new Date();
 				var isToday = (date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (date.getDate() ==
 					today.getDate());
@@ -326,6 +347,17 @@
 			}
 			removeAllChild($('timetable'));
 			$('timetable').appendChild(tbody);
+			$("dump").innerHTML = textDump;
+		}
+
+		function makeDumpRow(data, items) {
+			debugger;
+			let row = "";
+			for (let i in items) {
+				row += data[i] + "\t";
+			}
+			row += "\n";
+			return row;
 		}
 
 		// make a table row
@@ -382,6 +414,11 @@
 			}
 
 			update();
+		}
+
+		function copyToClipboard() {
+			$("dump").select();
+			document.execCommand("copy");
 		}
 
 		// update table

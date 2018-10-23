@@ -27,6 +27,11 @@ form {
   color: #17a2b8;
 }
 
+#dump {
+  width: 0;
+  height: 0;
+}
+
 /* .compass {
   border: 2px solid #ddd;
   border-radius: 50%;
