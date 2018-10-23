@@ -294,10 +294,6 @@
 				}
 			]
 
-			var tableType = 1 * $('tableType').value;
-			var tbody = document.createElement('thead');
-			tbody.appendChild(makeTableRow(items[tableType], items[tableType], 'head-row'));
-
 			var date = new Date(year, month, 1);
 			var endDate = new Date(year, month + 1, 1);
 			var format = timeFormat ? '12hNS' : '24h';
@@ -313,6 +309,10 @@
 			var jc = new JewishCalindar;
 			const hEaster = jc.getPesachDate(year);
 			$("hEaster").innerHTML = `${hEaster.day}-${hEaster.month}-${year}`;
+
+			var tableType = 1 * $('tableType').value;
+			var tbody = document.createElement('thead');
+			tbody.appendChild(makeTableRow(items[tableType], items[tableType], 'head-row'));
 
 			while (date < endDate) {
 				var times = spt.times(date, lat, lng, timeZone, format, dst, dstDates);
