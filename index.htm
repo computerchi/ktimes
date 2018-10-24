@@ -57,6 +57,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="card" id="manualForm" hidden="hidden">
 		<div class="card-header">
 			<div class="container">
@@ -75,52 +76,40 @@
 		</div>
 	</div>
 	<br />
+
 	<div class="container">
 		<div class="card-deck">
-			<div class="card bg-light mb-3" style="max-width: 18rem;">
-				<div class="card-header h3 text-center" id="year">2018</div>
-				<div class="card-body" align="center">
-					<div class="btn-group" style="direction: ltr">
-						<a href="javascript:displayMonth(+1)" title="العام المقبل" class="btn btn-outline-dark btn-sm">&#9664; العام
-							المقبل
-						</a>
-						<a href="javascript:displayMonth(-1)" title="العام الماضي" class="btn btn-outline-dark btn-sm">
-							العام الماضي &#9654;</a>
-					</div>
+			<div class="card bg-light mb-3">
+				<div class="card-body text-center  py-2 my-1">
+					<a href="javascript:displayMonth(-1)" title="العام الماضي" class="btn text-dark py-0 my-0 updn-arrows"><img src="./res/arrows-up.png"
+						 alt="-" style="width: 50%; opacity: 0.3;"></a>
+					<p id="year" class="h3 py-0 my-0">2018</p>
+					<a href="javascript:displayMonth(+1)" title="العام المقبل" class="btn text-dark py-0 my-0 updn-arrows"><img src="./res/arrows-dn.png"
+						 alt="+" style="width: 50%; opacity: 0.3;"></a>
+
 				</div>
 			</div>
-			<div class="card bg-light mb-3" style="max-width: 18rem;">
-				<div class="card-header h5">الفصح في التقويم العبري</div>
+			<div class="card bg-light mb-3">
+				<div class="card-header h6">الفصح في التقويم العبري</div>
 				<div class="card-body h5" id="hEaster">Hebrew Easter</div>
 			</div>
-			<div class="card bg-light mb-3" style="max-width: 18rem;">
-				<div class="card-header h5">الفصح لدى الطوائف الغربية</div>
+			<div class="card bg-light mb-3">
+				<div class="card-header h6">الفصح لدى الطوائف الغربية</div>
 				<div class="card-body h5" id="gEaster">Western Easter</div>
 			</div>
-			<div class="card bg-light mb-3" style="max-width: 18rem;">
-				<div class="card-header h5">الفصح لدى الطوائف الشرقية</div>
+			<div class="card bg-light mb-3">
+				<div class="card-header h6">الفصح لدى الطوائف الشرقية</div>
 				<div class="card-body h5" id="jEaster">Eastern Easter</div>
 			</div>
 		</div>
 	</div>
 
-	<div align="center">
-		<table>
-			<tr>
-				<td>
-				</td>
-			</tr>
-		</table>
-	</div>
 	<div class="container">
 		<table id="timetable" class="table table-sm">
 			<tbody></tbody>
 		</table>
 	</div>
-	<div class="container">
-		<div>
-		</div>
-	</div>
+
 	<div class="card">
 		<div class="card-header">
 
