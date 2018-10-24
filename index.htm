@@ -315,7 +315,7 @@
 			while (date < endDate) {
 				var times = spt.times(date, lat, lng, timeZone, format, dst, dstDates);
 				times.day = date.getDate();
-				if (tableType !== 2 || (tableType === 2 && times.hijrimonth === 9)) { // tableType 2 is Imsakiya, hijrimonth 9 is Ramadhan
+				if (tableType !== 2 || (tableType == 2 && times.hijrimonth == 9)) { // tableType 2 is Imsakiya, hijrimonth 9 is Ramadhan
 					textDump += makeDumpRow(times, items[tableType]);
 					var today = new Date();
 					var isToday = (date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (date.getDate() ==
