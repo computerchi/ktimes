@@ -26,7 +26,7 @@
 	<script type="text/javascript" src="./js/ShiaPrayTimes.js"></script>
 
 	<div class="card">
-		<div class="card-header">
+		<div class="card-footer">
 			<div class="container">
 				<form class="form-inline" action="javascript:update();">
 					<div class="form-group mb-2">
@@ -75,9 +75,8 @@
 			</div>
 		</div>
 	</div>
-	<br />
 
-	<div class="container">
+	<div class="container mt-3">
 		<div class="card-deck">
 			<div class="card bg-light mb-3">
 				<div class="card-body text-center  py-2 my-1">
@@ -195,7 +194,8 @@
 				},
 				//Imsakiya
 				{
-					day: 'تاريخ',
+					hijriday: 'رمضان',
+					date: 'تاريخ',
 					imsak: 'إمساك',
 					fajr: 'أذان الفجر',
 					subh: 'صلاة الصبح',
@@ -213,7 +213,7 @@
 					daysequence: 'تسلسل',
 					date: 'التاريخ اليومي',
 					arabicdayname: 'اسم اليوم',
-					hijrimonth: 'الشهر الهجري',
+					hijrimonthname: 'الشهر الهجري',
 					hijridate: 'التاريخ الهجري',
 					persiandayname: 'اليوم الايراني',
 					persianmonth: 'الشهر الايراني',
@@ -249,7 +249,7 @@
 					easternmonthname: 'الشهر الشرقي',
 					kurdidayname: 'اليوم الكوردي',
 					kurdishmonthname: 'الشهر الكوردي',
-					hijrimonth: 'الشهر الهجري',
+					hijrimonthname: 'الشهر الهجري',
 					hijridate: 'التاريخ الهجري',
 					persiandayname: 'اليوم الايراني',
 					persianmonth: 'الشهر الايراني',
@@ -287,6 +287,8 @@
 				}
 			]
 
+			var tableType = 1 * $('tableType').value;
+
 			var date = new Date(year, 0, 1);
 			var endDate = new Date(year + 1, 0, 1);
 			var format = timeFormat ? '12hNS' : '24h';
@@ -297,13 +299,12 @@
 			$("gEaster").innerHTML = `${gEaster.day}-${gEaster.month}-${gEaster.year}`;
 
 			const jEaster = spt.calcJulianEaster(year);
-			$("jEaster").innerHTML = `${jEaster.day}-${jEaster.month}-${jEaster.year}`;
+			$("jEaster").innerHTML = `${jEaster.day}-${jEaster.month}-${jEaster.year}<br>${jEaster.day}-${jEaster.month}-${jEaster.year} يولياني`;
 
 			var jc = new JewishCalindar;
 			const hEaster = jc.getPesachDate(year);
 			$("hEaster").innerHTML = `${hEaster.day}-${hEaster.month}-${year}`;
 
-			var tableType = 1 * $('tableType').value;
 			var tbody = document.createElement('thead');
 			tbody.appendChild(makeTableRow(items[tableType], items[tableType], 'head-row'));
 
@@ -314,12 +315,14 @@
 			while (date < endDate) {
 				var times = spt.times(date, lat, lng, timeZone, format, dst, dstDates);
 				times.day = date.getDate();
-				textDump += makeDumpRow(times, items[tableType]);
-				var today = new Date();
-				var isToday = (date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (date.getDate() ==
-					today.getDate());
-				var klass = isToday ? 'table-info' : '';
-				tbody.appendChild(makeTableRow(times, items[tableType], klass));
+				if (tableType !== 2 || (tableType === 2 && times.hijrimonth === 9)) { // tableType 2 is Imsakiya, hijrimonth 9 is Ramadhan
+					textDump += makeDumpRow(times, items[tableType]);
+					var today = new Date();
+					var isToday = (date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (date.getDate() ==
+						today.getDate());
+					var klass = isToday ? 'table-info' : '';
+					tbody.appendChild(makeTableRow(times, items[tableType], klass));
+				}
 				date.setDate(date.getDate() + 1); // next day
 			}
 			removeAllChild($('timetable'));
@@ -328,7 +331,6 @@
 		}
 
 		function makeDumpRow(data, items) {
-			debugger;
 			let row = "";
 			for (let i in items) {
 				row += data[i] + "\t";

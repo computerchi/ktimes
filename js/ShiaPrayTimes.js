@@ -228,8 +228,10 @@ class ShiaPrayTimes {
     goodTimes.hijridate = `${hijriDate.year}-${hijriDate.month}-${
       hijriDate.day
     }`;
-    goodTimes.hijrimonth = this.getHijriMonthName(hijriDate.month);
-    goodTimes.hijrishort = `${hijriDate.day} ${goodTimes.hijrimonth}`;
+    goodTimes.hijrimonth = hijriDate.month;
+    goodTimes.hijrimonthname = this.getHijriMonthName(hijriDate.month);
+    goodTimes.hijrishort = `${hijriDate.day} ${goodTimes.hijrimonthname}`;
+    goodTimes.hijriday = `${hijriDate.day}`;
     goodTimes.julianday = this.julianDay;
     goodTimes.persiandayname = farsiDayNames[date.getDay()];
     goodTimes.persiandate = this.persianCal.iranianDate;
