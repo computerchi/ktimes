@@ -299,7 +299,7 @@
 			$("gEaster").innerHTML = `${gEaster.day}-${gEaster.month}-${gEaster.year}`;
 
 			const jEaster = spt.calcJulianEaster(year);
-			$("jEaster").innerHTML = `${jEaster.day}-${jEaster.month}-${jEaster.year}<br>${jEaster.day}-${jEaster.month}-${jEaster.year} يولياني`;
+			$("jEaster").innerHTML = `${jEaster.jDay}-${jEaster.jMonth}-${jEaster.jYear}<br>${jEaster.day}-${jEaster.month}-${jEaster.year} يولياني`;
 
 			var jc = new JewishCalindar;
 			const hEaster = jc.getPesachDate(year);

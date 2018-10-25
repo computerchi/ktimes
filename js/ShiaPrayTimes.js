@@ -1,15 +1,14 @@
 //import CalendarTool from "../lib/calendarTool";
 
-//
-//	ShiaPrayTimes.js
-//	Developed by Ali Mahdi, ©2018
-//	This library is wrapper class for the PrayTimes.org library.
-//	This class uses and encapsulates the PrayTimes object but
-//	does not make any changes to the original object.
-//	The app that uses this library must also load up the PrayTimes.org library.
-//	The calculation code found in here is also based on code translated from BASIC
-//	By Eng. Mohammed Ali Alsaegh.
-//
+/**
+ * ShiaPrayTimes.js
+ *	Developed by Ali Mahdi, ©2018
+ *	This library is wrapper class for the PrayTimes.org library.
+ *	This class uses and encapsulates the PrayTimes object but
+ *	does not make any changes to the original object.
+ *	The app that uses this library must also load up the PrayTimes.org library.
+ *	In addition to calculations based on code by Eng. Mohammed Ali Alsaegh, translated from BASIC.
+ */
 
 ("use strict");
 
@@ -305,7 +304,7 @@ class ShiaPrayTimes {
     let j = div(80 * l, 2447);
     let day = l - div(2447 * j, 80);
     l = div(j, 11);
-    let month = mod(i + 2 - 12 * l, 12) + 1;
+    let month = ((i + 2 - 12 * l) % 12) + 1;
     let year = 100 * (n - 49) + i + l;
 
     return { year, month, day };
@@ -319,9 +318,9 @@ class ShiaPrayTimes {
   julianDateFromJulianDay(jd) {
     let j = 4 * jd + 139361631;
     j = j + div(div(4 * jd + 183187720, 146097) * 3, 4) * 4 - 3908;
-    const i = div(mod(j, 1461), 4) * 5 + 308;
-    let day = div(mod(i, 153), 5) + 1;
-    let month = mod(div(i, 153), 12) + 1;
+    const i = div(j % 1461, 4) * 5 + 308;
+    let day = div(i % 153, 5) + 1;
+    let month = (div(i, 153) % 12) + 1;
     let year = div(j, 1461) - 100100 + div(8 - month, 6);
 
     return { year, month, day };
@@ -385,42 +384,58 @@ class ShiaPrayTimes {
     return hijriMonthNames[month - 1];
   }
 
+  /**
+   * Calculates Easter in the Gregorian calendar.
+   * @param  {any} year
+   * @return date object { year, month, day }
+   * @memberof ShiaPrayTimes
+   */
   calcGregorianEaster(year) {
     if (year >= 1583) {
-      let a = mod(year, 19);
-      let b = div(year, 100);
-      let c = mod(year, 100);
-      let d = div(b, 4);
-      let e = mod(b, 4);
-      let f = div(b + 8, 25);
-      let g = div(b - f + 1, 3);
-      let h = mod(19 * a + b - d - g + 15, 30);
-      let i = div(c, 4);
-      let k = mod(c, 4);
-      let l = mod(32 + 2 * e + 2 * i - h - k, 7);
-      let m = div(a + 11 * h + 22 * l, 451);
-      let r = h + l - 7 * m + 114;
-      let month = div(r, 31);
-      let day = mod(r, 31) + 1;
+      const a = year % 19;
+      const b = div(year, 100);
+      const c = year % 100;
+      const d = div(b, 4);
+      const e = b % 4;
+      const f = div(b + 8, 25);
+      const g = div(b - f + 1, 3);
+      const h = (19 * a + b - d - g + 15) % 30;
+      const i = div(c, 4);
+      const k = c % 4;
+      const l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = div(a + 11 * h + 22 * l, 451);
+      const r = h + l - 7 * m + 114;
+      const month = div(r, 31);
+      const day = (r % 31) + 1;
       return { year, month, day };
     } else {
-      let { month, day } = this.calcJulianEaster(year);
+      const { month, day } = this.calcJulianEaster(year);
 
       return { year, month, day };
     }
   }
 
   calcJulianEaster(year) {
-    let a = mod(year, 4);
-    let b = mod(year, 7);
-    let c = mod(year, 19);
-    let d = mod(19 * c + 15, 30);
-    let e = mod(2 * a + 4 * b - d + 34, 7);
-    let r = d + e + 144;
-    let month = div(r, 31) - 1;
-    let day = mod(r, 31) + 2;
+    const a = year % 4;
+    const b = year % 7;
+    const c = year % 19;
+    const d = (19 * c + 15) % 30;
+    const e = (2 * a + 4 * b - d + 34) % 7;
+    const r = d + e + 144;
+    const month = div(r, 31) - 1;
+    const day = (r % 31) + 2;
 
-    return { year, month, day };
+    const jdn = this.julianDayFromJulianDate(year, month, day);
+    const gDate = this.julianDateFromJulianDay(jdn);
+
+    return {
+      year,
+      month,
+      day,
+      jYear: gDate.year,
+      jMonth: gDate.month,
+      jDay: gDate.day
+    };
   }
 
   testEaster() {
@@ -1013,9 +1028,4 @@ class ShiaPrayTimes {
 // Utility functions for integer division
 function div(a, b) {
   return ~~(a / b);
-}
-
-// Utility function for modulus
-function mod(a, b) {
-  return a - ~~(a / b) * b;
 }
