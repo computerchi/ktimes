@@ -286,6 +286,40 @@ class ShiaPrayTimes {
             ) * 100
           ).toFixed(0) + "% N";
 
+    // Astro-data
+    // seq","full_date","day_name","day_of_month","arabic_month","sea_current","tide_h1","ampm1","height1","tide_l1","ampm2","height2","tide_h2","ampm3","height3","tide_l2","ampm4","height4","humid_h","humid_l","temp_h","temp_l"
+    if (this.getDaySequence()) {
+      const seaCurrentState = {
+        FO: "فساد عود",
+        FS: "فساد صغير",
+        HO: "حمل عود",
+        HS: "حمل صغير"
+      };
+      const dayPart = {
+        subh: "صباحا",
+        dhuhr: "ظهرا",
+        asr: "عصرا",
+        mesa: "مساءً"
+      };
+      const astroIndex = this.getDaySequence() - 1;
+      goodTimes.sea_current = seaCurrentState[astroData[astroIndex][0]];
+      goodTimes.tide_h1 = astroData[astroIndex][1];
+      goodTimes.ampm1 = dayPart[astroData[astroIndex][2]] || "-";
+      goodTimes.height1 = astroData[astroIndex][3];
+      goodTimes.tide_l1 = astroData[astroIndex][4];
+      goodTimes.ampm2 = dayPart[astroData[astroIndex][5]] || "-";
+      goodTimes.height2 = astroData[astroIndex][6];
+      goodTimes.tide_h2 = astroData[astroIndex][7];
+      goodTimes.ampm3 = dayPart[astroData[astroIndex][8]] || "-";
+      goodTimes.height3 = astroData[astroIndex][9];
+      goodTimes.tide_l2 = astroData[astroIndex][10];
+      goodTimes.ampm4 = dayPart[astroData[astroIndex][11]] || "-";
+      goodTimes.height4 = astroData[astroIndex][12];
+      goodTimes.humid_h = astroData[astroIndex][13];
+      goodTimes.humid_l = astroData[astroIndex][14];
+      goodTimes.temp_h = astroData[astroIndex][15];
+      goodTimes.temp_l = astroData[astroIndex][16];
+    }
     return goodTimes;
   }
 

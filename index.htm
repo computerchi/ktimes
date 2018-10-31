@@ -9,11 +9,8 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="./css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="./css/styles.css" />
 
-	<script>
-	</script>
-
 	<script type="text/javascript" src="./js/cityFile.js"></script>
-
+	<script type="text/javascript" src="./js/astro-data.js"></script>
 </head>
 
 <body>
@@ -45,7 +42,8 @@
 							<option value="2">إمساكية</option>
 							<option value="3">تقاويم</option>
 							<option value="4">مواسم</option>
-							<option value="5">كل شيء</option>
+							<option value="5">حالة البحر والحرارة والرطوبة</option>
+							<option value="6">كل شيء</option>
 						</select>
 						<label class="mr-3" for="dst">توقيت صيفي</label>
 						<select id="dst" class="form-control  mr-2" size="1" onchange="toggleManualForm()">
@@ -235,6 +233,31 @@
 					truezodiac: 'البرج الحقيقي',
 					standardzodiac: 'البرج الاصطلاحي'
 				},
+				//Astro Data
+				{
+					day: 'تاريخ',
+					daysequence: 'تسلسل',
+					date: 'التاريخ اليومي',
+					arabicdayname: 'اسم اليوم',
+					hijrimonthname: 'الشهر الهجري',
+					sea_current: "معادلة تيار البحر",
+					tide_h1: "وقت المد الأول",
+					ampm1: "متى",
+					height1: "ارتفاع",
+					tide_l1: "وقت الجزر الأول",
+					ampm2: "متى",
+					height2: "ارتفاع",
+					tide_h2: "وقت المد الثاني",
+					ampm3: "متى",
+					height3: "ارتفاع",
+					tide_l2: "وقت الجزر الثاني",
+					ampm4: "متى",
+					height4: "ارتفاع",
+					humid_h: "أعلى رطوبة",
+					humid_l: "أدنى رطوبة",
+					temp_l: "أعلى حرارة",
+					temp_h: "أدنى حرارة"
+				},
 				//All Times
 				{
 					day: 'تاريخ',
@@ -283,7 +306,24 @@
 					anwaa: 'أنواء',
 					mawasem: 'مواسم',
 					truezodiac: 'البرج الحقيقي',
-					standardzodiac: 'البرج الاصطلاحي'
+					standardzodiac: 'البرج الاصطلاحي',
+					sea_current: "معادلة تيار البحر",
+					tide_h1: "وقت المد الأول",
+					ampm1: "متى",
+					height1: "ارتفاع",
+					tide_l1: "وقت الجزر الأول",
+					ampm2: "متى",
+					height2: "ارتفاع",
+					tide_h2: "وقت المد الثاني",
+					ampm3: "متى",
+					height3: "ارتفاع",
+					tide_l2: "وقت الجزر الثاني",
+					ampm4: "متى",
+					height4: "ارتفاع",
+					humid_h: "أعلى رطوبة",
+					humid_l: "أدنى رطوبة",
+					temp_l: "أعلى حرارة",
+					temp_h: "أدنى حرارة"
 				}
 			]
 
